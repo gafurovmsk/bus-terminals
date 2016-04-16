@@ -9,7 +9,6 @@
         <!--Расписание-->
         <scene sceneID="hNz-n2-bh7">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>
                 <viewController id="9pv-A4-QxB" customClass="FirstViewController" customModule="bus_terminals" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Ia1-K6-d13"/>
@@ -127,6 +126,7 @@
                     <tabBarItem key="tabBarItem" title="Расписание" image="Day View Filled-25" id="acW-dT-cKf"/>
                     <navigationItem key="navigationItem" id="BCX-62-FmQ"/>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="607" y="-620"/>
         </scene>
@@ -187,7 +187,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Куда" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="aEe-jm-Lrs">
-                                                    <rect key="frame" x="10" y="12" width="37" height="20"/>
+                                                    <rect key="frame" x="15" y="12" width="37" height="20"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -332,7 +332,6 @@
         <!--Расписание-->
         <scene sceneID="meo-Sl-7LD">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="at8-lt-kWF" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController id="zOj-vq-p0f" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Расписание" image="Day View Filled-25" id="4yb-JC-gwY"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="cUS-S2-x8r">
@@ -343,6 +342,7 @@
                         <segue destination="yDy-Ml-kLv" kind="relationship" relationship="rootViewController" id="QCW-rX-pTv"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="at8-lt-kWF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-114" y="-620"/>
         </scene>
