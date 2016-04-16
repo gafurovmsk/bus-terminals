@@ -12,7 +12,10 @@ class FirstViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+      
+        // adding a background image
+       // self.view.backgroundColor = UIColor(patternImage: UIImage(named: "74.png")!)
+        
     }
 
     override func didReceiveMemoryWarning() {
