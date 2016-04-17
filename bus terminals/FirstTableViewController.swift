@@ -8,92 +8,74 @@
 
 import UIKit
 
-class FirstTableViewController: UITableViewController {
 
+class FirstTableViewController: UITableViewController {
+    
+    // ссылка на "откуда"
+    @IBOutlet weak var StartPlaceOutlet: UITableViewCell!
+    
+    // ссылка на "куда"
+    @IBOutlet weak var DestinationOutlet: UITableViewCell!
+    
+    // ссылка на "дата отправления"
+    @IBOutlet weak var PickedDateForCell: UIDatePicker!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        
+        // creating NSDate for now
+        let TodayDate = NSDate()
+        PickedDateForCell.minimumDate = TodayDate
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    // кнопка для cell - "даты отправления", т.к. не получилось
+    // default cell настроить на открытие PickerData
+    // (возможна только ссылка , @IBAction нет)
+    @IBOutlet weak var ButtonLabelChangeFor: UIButton!
+    
+    @IBAction func DatePickingButtonPressed(sender: UIButton) {
         
         
+        // Сторонний метод
+        //  DatePickerDialog().show("Выбор даты") {
+        //     (date) in
+        //     sender.setTitle("\(date)", forState: .Normal)}
+        
+        PickedDateForCell.hidden = false
+        
+    }
+    
+    
+    @IBAction func DatePickerChanged(sender: UIDatePicker) {
+        
+        let dateFormatter = NSDateFormatter()
+        
+        dateFormatter.locale = NSLocale(localeIdentifier: "ru_RU")
+        
+        dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle
+        
+        let newDate = dateFormatter.stringFromDate(sender.date)
+        
+        ButtonLabelChangeFor.setTitle(String(newDate), forState: .Normal)
         
         
+        // для того чтобы скрыть барабан
+        // вообще можно, динамически создавать 4 строку
+        // для барабана и удалять ее по мере нажатия на
+        // другой cell 
+        // override touchesbegan не сработал
+        // PickedDateForCell.hidden = true
+        
     }
-
-    // MARK: - Table view data source
-
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
-    }
-
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
-    }
-
-    /*
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
-
-        // Configure the cell...
-
-        return cell
-    }
-    */
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+    
+    
+    
+    
+    
 }
