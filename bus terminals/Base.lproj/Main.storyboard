@@ -136,7 +136,6 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="ButtonLabelChangeFor" destination="zHb-mh-vUh" id="1IQ-YQ-WQ1"/>
-                        <outlet property="DateCell" destination="7QZ-2Q-SbL" id="HBU-hz-5KU"/>
                         <outlet property="DestinationOutlet" destination="pNZ-lA-9Vp" id="keb-kQ-5JE"/>
                         <outlet property="PickedDateForCell" destination="wEN-aC-NpM" id="Q0S-X3-qnU"/>
                         <outlet property="StartPlaceOutlet" destination="xX2-h4-mua" id="Kg1-F9-qxb"/>
@@ -343,6 +342,6 @@
         <image name="High Importance Filled-25" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="U6T-B2-z5v"/>
+        <segue reference="2dw-AO-DLb"/>
     </inferredMetricsTieBreakers>
 </document>
