@@ -16,8 +16,37 @@
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bus terminals" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Feg-3t-Pj4">
+                                <rect key="frame" x="220" y="285" width="160" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="160" id="WeH-WI-gS4"/>
+                                    <constraint firstAttribute="height" constant="30" id="a3f-jW-rJe"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="26"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="junior test app" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Aai-0V-CaE">
+                                <rect key="frame" x="245" y="323" width="110" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="9Zx-Lg-DDh"/>
+                                    <constraint firstAttribute="width" constant="110" id="yqg-Je-MjY"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Feg-3t-Pj4" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="VnQ-Az-LPM"/>
+                            <constraint firstItem="Aai-0V-CaE" firstAttribute="top" secondItem="Feg-3t-Pj4" secondAttribute="bottom" constant="8" id="bLc-H9-oRH"/>
+                            <constraint firstItem="Aai-0V-CaE" firstAttribute="top" secondItem="Feg-3t-Pj4" secondAttribute="bottom" constant="8" id="sOL-yj-HmU"/>
+                            <constraint firstItem="Feg-3t-Pj4" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="tiL-Y6-d2p"/>
+                            <constraint firstItem="Aai-0V-CaE" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="woe-SD-lwh"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>

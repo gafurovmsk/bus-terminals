@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1835E1C11CC4111C00F3438C /* allStations.json in Resources */ = {isa = PBXBuildFile; fileRef = 1835E1C01CC4111C00F3438C /* allStations.json */; };
 		18522B5C1CC24894002D6D20 /* DataShowTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18522B5B1CC24894002D6D20 /* DataShowTableViewController.swift */; };
 		18522B621CC2B6AD002D6D20 /* DatePickerDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18522B611CC2B6AD002D6D20 /* DatePickerDialog.swift */; };
 		18A7F3831CC2213600DF3CEB /* FirstTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A7F3821CC2213600DF3CEB /* FirstTableViewController.swift */; };
@@ -39,6 +40,7 @@
 
 /* Begin PBXFileReference section */
 		1832FFB1B4C1E89A51DED859 /* Pods-bus terminals.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bus terminals.release.xcconfig"; path = "Pods/Target Support Files/Pods-bus terminals/Pods-bus terminals.release.xcconfig"; sourceTree = "<group>"; };
+		1835E1C01CC4111C00F3438C /* allStations.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = allStations.json; sourceTree = "<group>"; };
 		18522B5B1CC24894002D6D20 /* DataShowTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DataShowTableViewController.swift; path = ../DataShowTableViewController.swift; sourceTree = "<group>"; };
 		18522B611CC2B6AD002D6D20 /* DatePickerDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePickerDialog.swift; sourceTree = "<group>"; };
 		18A7F3821CC2213600DF3CEB /* FirstTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstTableViewController.swift; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 				18A7F3821CC2213600DF3CEB /* FirstTableViewController.swift */,
 				18FD35A81CBF816A00746055 /* SecondViewController.swift */,
 				18522B5B1CC24894002D6D20 /* DataShowTableViewController.swift */,
+				1835E1C01CC4111C00F3438C /* allStations.json */,
 				18FD35AA1CBF816A00746055 /* Main.storyboard */,
 				18FD35AD1CBF816A00746055 /* Assets.xcassets */,
 				18FD35AF1CBF816A00746055 /* LaunchScreen.storyboard */,
@@ -270,6 +273,7 @@
 			files = (
 				18FD35B11CBF816A00746055 /* LaunchScreen.storyboard in Resources */,
 				18FD35AE1CBF816A00746055 /* Assets.xcassets in Resources */,
+				1835E1C11CC4111C00F3438C /* allStations.json in Resources */,
 				18FD35AC1CBF816A00746055 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -489,6 +493,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "bus terminals/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Gafurov.id.bus-terminals";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -501,6 +506,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "bus terminals/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Gafurov.id.bus-terminals";
 				PRODUCT_NAME = "$(TARGET_NAME)";

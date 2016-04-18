@@ -7,45 +7,98 @@
 //
 
 import UIKit
+import SwiftyJSON
 
-class DataShowTableViewController: UITableViewController {
+class DataShowTableViewController: UITableViewController , UISearchResultsUpdating {
 
+    // SearchController - поиск
+    var SearchController : UISearchController!
+    // часть данных после перехода по segue
+    var citiesByPressingCell : JSON = []
+    // переменная для определения ячейки перехода (segue)
+    // false - start ячейка |true - destination cell
+    var whichCellWasPressed = Bool()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-    }
+        self.citiesByPressingCell = parseJSON()
+        
+            }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
 
+    //search settings
+    func searchSettings() {
+        SearchController = UISearchController(searchResultsController: nil)
+        SearchController.dimsBackgroundDuringPresentation = false
+        SearchController.searchResultsUpdater = self
+        tableView.tableHeaderView = SearchController.searchBar
+        definesPresentationContext = true
+    }
+    
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
+        if let searchText = searchController.searchBar.text {
+  //          filterContent(searchText)
+            tableView.reloadData()
+        }
+    }
+    
+    
+    
     // MARK: - Table view data source
 
+    func parseJSON()->(JSON) {
+    
+        let path : String = NSBundle.mainBundle().pathForResource("allStations", ofType: "json") as String!
+        let jsonData = NSData(contentsOfFile: path) as NSData!
+        //let jsonData = NSData(contentsOfURL: "https://raw.githubusercontent.com/tutu-ru/hire_ios-test/ce9e69ded1fb5d35dad6fcce1c60920da7c7659e/allStations.json")!
+        let readableJSON = JSON(data: jsonData, options: NSJSONReadingOptions.MutableContainers, error: nil)
+        
+        
+        // в зависимости от whichCellWasPressed - выбирается часть данных
+        var citiesByPressingCell = readableJSON
+         
+        if whichCellWasPressed {
+        
+            citiesByPressingCell = readableJSON["citiesTo"]
+        } else {
+        
+            citiesByPressingCell = readableJSON["citiesFrom"]
+        }
+       
+        return citiesByPressingCell
+    }
+    
+    
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+        // по количеству городов
+        return citiesByPressingCell.count
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        //return filteredStations[].count
+        
+        return 4
     }
 
-    /*
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
-
-        // Configure the cell...
-
+        
+        //   cell.textLabel?.text = citiesTo[""][indexPath.section].stations[indexPath.row].station
+        
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
+        
         return cell
+
+    
     }
-    */
+    
 
     /*
     // Override to support conditional editing of the table view.
