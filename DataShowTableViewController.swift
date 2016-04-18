@@ -11,28 +11,146 @@ import SwiftyJSON
 
 class DataShowTableViewController: UITableViewController , UISearchResultsUpdating {
 
+    // внутренний класс для станций
+    class Station {
+        
+        var countryTitle = ""
+        var cityTitle = ""
+        var regionTitle = ""
+        var stationTitle = ""
+        
+    }
+    
+    // класс для оформления секции (т.е. список станций в одном городе)
+    class Section {
+        
+        var countryTitle = ""
+        var cityTitle = ""
+        var regionTitle = ""
+        var stationTitle = [""]
+    }
+    
+    //MARK: - variables
+    
+    
     // SearchController - поиск
     var SearchController : UISearchController!
-    // часть данных после перехода по segue
-    var citiesByPressingCell : JSON = []
+    // нужная часть allStation.json
+    var citiesOnJSONFormat : JSON = []
     // переменная для определения ячейки перехода (segue)
     // false - start ячейка |true - destination cell
     var whichCellWasPressed = Bool()
+    // входящий массив станций после парсинга
+    var stationsParsed = [Station]()
+    // преобразованный массив станций для размещения в секциях таблицы
+    var sectionsParsed = [Section]()
+    // результаты поиска
+    var searchResult = [Station]()
+    
+    var dataForSegue = Station()
+    
+    
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        self.citiesByPressingCell = parseJSON()
+         //parseJSON(&self.citiesOnJSONFormat)
         
             }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    // MARK: - Table view data source
+    
+    func parseJSON(inout citiesByPressingCell: JSON) ->() {
+        
+        let path : String = NSBundle.mainBundle().pathForResource("allStations", ofType: "json") as String!
+        let jsonData = NSData(contentsOfFile: path) as NSData!
+        //let jsonData = NSData(contentsOfURL: "https://raw.githubusercontent.com/tutu-ru/hire_ios-test/ce9e69ded1fb5d35dad6fcce1c60920da7c7659e/allStations.json")!
+        let readableJSON = JSON(data: jsonData, options: NSJSONReadingOptions.MutableContainers, error: nil)
+        
+        
+        // в зависимости от whichCellWasPressed - выбирается часть данных
+        // var citiesByPressingCell : JSON
+        
+        if whichCellWasPressed {
+            
+            citiesByPressingCell = readableJSON["citiesTo"]
+            
+        } else {
+            
+            citiesByPressingCell = readableJSON["citiesFrom"]
+            
+        }
+        
+        //выстаскиваем значения стаций и региона для каждого конкретного города
+        for city in citiesByPressingCell {
+            
+            for station in city.1["stations"] {
+                
+                let tempStation = Station()
+                
+                //вытаскиваем значения города, страны, региона, станции и тип станции
+                tempStation.countryTitle = station.1["countryTitle"].string!
+                tempStation.cityTitle = station.1["cityTitle"].string!
+                tempStation.regionTitle = station.1["regionTitle"].string!
+                tempStation.stationTitle = station.1["stationTitle"].string!
+                
+                
+                //добавляем в массив для обработанных станций
+                stationsParsed.append(tempStation)
+                
+                
+                // на самом деле к этому моменту, уже JSON стал понятен
+                // и можно было обойтись без его хранения в массивах типа Station
+                // UPD: оказалось не всегда это хорошо:
+            }
+            
+        }
+        
+        
     }
 
-    //search settings
+    
+    //формируем массив секций
+    func creatingSectionsBy(stations: [Station]) {
+        
+        // переменная для новой секции
+        var newSection : Section!
+        
+        var lastCityTitle = ""
+        
+        for (i,value) in stations.enumerate() {
+            // перевод безимянных в конец
+            if value.cityTitle != lastCityTitle {
+                
+                if newSection != nil {
+                    sectionsParsed.append(newSection)
+                }
+                // добавление
+                newSection = Section()
+                
+                newSection.cityTitle = value.cityTitle
+                newSection.countryTitle = value.countryTitle
+                newSection.regionTitle = value.regionTitle
+                
+                
+                lastCityTitle = value.cityTitle
+                newSection.stationTitle += [value.stationTitle]
+                
+                if i == (stationsParsed.count - 1) { sectionsParsed.append(newSection) }
+                
+            } else {
+                
+                if i == (stationsParsed.count - 1) { sectionsParsed.append(newSection) }
+                newSection.stationTitle += [value.stationTitle]
+            }
+        }
+    }
+    
+    
+    
+    
+
+    // создание поиска (контроллер и бар в нем )
     func searchSettings() {
         SearchController = UISearchController(searchResultsController: nil)
         SearchController.dimsBackgroundDuringPresentation = false
@@ -43,106 +161,97 @@ class DataShowTableViewController: UITableViewController , UISearchResultsUpdati
     
     func updateSearchResultsForSearchController(searchController: UISearchController) {
         if let searchText = searchController.searchBar.text {
-  //          filterContent(searchText)
+            filterContent(searchText)
             tableView.reloadData()
         }
     }
     
     
-    
-    // MARK: - Table view data source
-
-    func parseJSON()->(JSON) {
-    
-        let path : String = NSBundle.mainBundle().pathForResource("allStations", ofType: "json") as String!
-        let jsonData = NSData(contentsOfFile: path) as NSData!
-        //let jsonData = NSData(contentsOfURL: "https://raw.githubusercontent.com/tutu-ru/hire_ios-test/ce9e69ded1fb5d35dad6fcce1c60920da7c7659e/allStations.json")!
-        let readableJSON = JSON(data: jsonData, options: NSJSONReadingOptions.MutableContainers, error: nil)
-        
-        
-        // в зависимости от whichCellWasPressed - выбирается часть данных
-        var citiesByPressingCell = readableJSON
-         
-        if whichCellWasPressed {
-        
-            citiesByPressingCell = readableJSON["citiesTo"]
-        } else {
-        
-            citiesByPressingCell = readableJSON["citiesFrom"]
-        }
-       
-        return citiesByPressingCell
-    }
-    
-    
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // по количеству городов
-        return citiesByPressingCell.count
-    }
-
-    override func tableView
-        // #warning Incomplete implementation, return the number of rows
-        //return filteredStations[].count
-        
-        return 4
+    //метод поиска
+    func filterContent(searchText: String) {
+        searchResult = stationsParsed.filter({ (station: Station) -> Bool in
+            let matchStationTitle = station.stationTitle.rangeOfString(searchText, options: NSStringCompareOptions.CaseInsensitiveSearch)
+            let matchCityTitle = station.cityTitle.rangeOfString(searchText, options: NSStringCompareOptions.CaseInsensitiveSearch)
+            let matchCountry = station.countryTitle.rangeOfString(searchText, options: NSStringCompareOptions.CaseInsensitiveSearch)
+            return matchStationTitle != nil || matchCityTitle != nil || matchCountry != nil
+        })
     }
 
     
+   
+    // наполнение ячеек
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        //   cell.textLabel?.text = citiesTo[""][indexPath.section].stations[indexPath.row].station
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell")! as UITableViewCell
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
+        if SearchController.active && SearchController.searchBar.text != "" {
+            cell.textLabel?.text = searchResult[indexPath.row].stationTitle
+        } else {
+            cell.textLabel?.text = sectionsParsed[indexPath.section].stationTitle[indexPath.row]
+        }
         
         return cell
 
-    
     }
     
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    //название секций
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        
+        if SearchController.active {
+            return ""
+        } else {
+            return sectionsParsed[section].cityTitle + ", " + sectionsParsed[section].countryTitle
+        }
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+    
+    
+    
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        return citiesOnJSONFormat[1]["stations"].count
     }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
+    
+    // количество секций
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        // по количеству городов
+        
+        return citiesOnJSONFormat.count
     }
-    */
 
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
+    
+    
+    
+    
+
+    
+
+    
+    /* //не работает ни первый ни второй случаи
+    
+    //количество строк в секции
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    if SearchController.active {
+    return searchResult.count
+    } else {
+    return sectionsParsed[section].stationTitle.count
     }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
     }
-    */
+    
+    //количество секций
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    
+    /*
+    if SearchController.active {
+    return 1
+    } else {
+    return sectionsParsed.count
+    }*/
+    return sectionsParsed.count
+    }
+
+    
+    
+    
+  */
 
 }
