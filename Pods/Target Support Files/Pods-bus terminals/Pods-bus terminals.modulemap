@@ -1,0 +1,6 @@
+framework module Pods_bus_terminals {
+  umbrella header "Pods-bus terminals-umbrella.h"
+
+  export *
+  module * { export * }
+}
